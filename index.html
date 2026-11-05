@@ -268,6 +268,22 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   .ghost { padding: 5px 9px; font-size: 13px; }
   .hint { display: none; }
 }
+/* Phones and touch screens: tap targets at least 44px, text at least 12px, no zoom-on-focus. */
+@media (max-width: 640px), (pointer: coarse) {
+  .ghost, .mini, .chip, .del, .play, .send, .stop, .starter, .continue, .linkish, .modes button, .depth button, .voicebar select, .item .main, .add-fact input, details.code-fold > summary { min-height: 44px; }
+  .ghost, .mini, .del, .send, .stop, .play, .depth button, .linkish { display: inline-flex; align-items: center; justify-content: center; }
+  .icon-btn { width: 44px; height: 44px; }
+  .del { min-width: 44px; }
+  .file-chip button { width: 36px; height: 36px; }
+  .file-chip { padding-block: 2px; }
+  .mini, .linkish { padding-inline: 12px; font-size: 13px; }
+  .linkish { padding-inline: 4px; }
+  .depth { flex-wrap: wrap; }
+  .depth button { padding: 0 14px; font-size: 13px; }
+  details.code-fold > summary { display: flex; align-items: center; }
+  .ghost .count, .continue .k, .col h2, .msg .who, .codebar, .memnote .row b, .follow .lbl, .depth .lbl, .d-status, .gamecard .g-k { font-size: 12px; }
+  textarea#input, .add-fact input { font-size: 16px; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .msg { animation: rise .18s ease-out; }
   .drawer:not([hidden]) { animation: slide .18s ease-out; }
