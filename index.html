@@ -1,9 +1,42 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Omni Desk</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<title>Omni Desk</title>
+<link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<script>
+/* Friendly crash toast: any uncaught error or rejected promise shows a small "tap to reload" message. */
+(function () {
+  var shown = false;
+  function toast() {
+    if (shown) return; shown = true;
+    var show = function () {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "crash-toast"; b.setAttribute("role", "alert");
+      b.textContent = "Something went wrong - tap to reload";
+      b.onclick = function () { location.reload(); };
+      document.body.appendChild(b);
+    };
+    if (document.body) show(); else document.addEventListener("DOMContentLoaded", show);
+  }
+  window.onerror = function (msg) { if (!/ResizeObserver loop/i.test(String(msg))) toast(); };
+  window.addEventListener("unhandledrejection", function () { toast(); });
+})();
+</script>
+<style>
+/* Self-hosted fonts (latin subset, from @fontsource). Other scripts fall back to system fonts. */
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/bricolage-grotesque-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/bricolage-grotesque-latin-700-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+</style>
 <style>
 /* Layout: one-screen desk — top bar (brand, modes, tools), scrolling thread, pinned composer; Chats and Memory open in a right-side drawer. */
 :root {
@@ -218,12 +251,38 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
 .p-note { font-size: 12px; color: var(--muted); }
 .player iframe { flex: 1; width: 100%; border: 0; display: block; background: var(--surface); }
 
+/* Crash toast and "open in Claude" screen */
+.crash-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; max-width: calc(100% - 32px);
+  border: 0; border-radius: 999px; padding: 12px 20px; min-height: 44px; background: var(--ink); color: var(--bg); font: 600 14px/1.3 var(--font-body); box-shadow: 0 4px 16px rgba(0,0,0,.25); }
+.gate { position: fixed; inset: 0; z-index: 55; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+.gate-in { max-width: 420px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.gate h1 { margin: 0; font: 700 clamp(24px, 6vw, 32px)/1.15 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.gate .mark { width: 40px; height: 40px; }
+.gate p { margin: 0; color: var(--muted); }
+.gate a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; }
+
 @media (max-width: 640px) {
   .starters { grid-template-columns: minmax(0, 1fr); }
   .modes { order: 3; width: 100%; }
   .modes button { flex: 1; padding: 6px 4px; }
   .ghost { padding: 5px 9px; font-size: 13px; }
   .hint { display: none; }
+}
+/* Phones and touch screens: tap targets at least 44px, text at least 12px, no zoom-on-focus. */
+@media (max-width: 640px), (pointer: coarse) {
+  .ghost, .mini, .chip, .del, .play, .send, .stop, .starter, .continue, .linkish, .modes button, .depth button, .voicebar select, .item .main, .add-fact input, details.code-fold > summary { min-height: 44px; }
+  .ghost, .mini, .del, .send, .stop, .play, .depth button, .linkish { display: inline-flex; align-items: center; justify-content: center; }
+  .icon-btn { width: 44px; height: 44px; }
+  .del { min-width: 44px; }
+  .file-chip button { width: 36px; height: 36px; }
+  .file-chip { padding-block: 2px; }
+  .mini, .linkish { padding-inline: 12px; font-size: 13px; }
+  .linkish { padding-inline: 4px; }
+  .depth { flex-wrap: wrap; }
+  .depth button { padding: 0 14px; font-size: 13px; }
+  details.code-fold > summary { display: flex; align-items: center; }
+  .ghost .count, .continue .k, .col h2, .msg .who, .codebar, .memnote .row b, .follow .lbl, .depth .lbl, .d-status, .gamecard .g-k { font-size: 12px; }
+  textarea#input, .add-fact input { font-size: 16px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .msg { animation: rise .18s ease-out; }
@@ -232,6 +291,8 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   @keyframes slide { from { transform: translateX(16px); } to { transform: none; } }
 }
 </style>
+</head>
+<body>
 
 <div class="app">
   <header class="top">
@@ -320,9 +381,18 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   <iframe id="pFrame" title="Game" sandbox="allow-scripts allow-pointer-lock"></iframe>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<div class="gate" id="gate" hidden>
+  <div class="gate-in">
+    <span class="mark" aria-hidden="true"></span>
+    <h1>Omni Desk runs inside Claude</h1>
+    <p>Open it from Pedro's Claude link to ask questions, save chats and play games.</p>
+    <a href="https://claude.ai/artifact/VBSoc9wNXNaXUaaxB2WEgL" target="_top" rel="noopener">Open Omni Desk in Claude</a>
+  </div>
+</div>
+
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/purify.min.js"></script>
+<script src="vendor/highlight.min.js"></script>
 <script>
 (() => {
   // ---------- prompts ----------
@@ -883,12 +953,21 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
     if (!html) { showNotice("That game isn't in your chats. A game link opens only for the account that made it; use Save .html to share it."); return; }
     showPlayer(html, gameTitle(html, c.title), "game-" + chatId + "-" + idx);
   }
+  // Injected into played games: suspend their sound while the tab is hidden, resume on return (animation frames pause on their own).
+  const PAUSE = "<script>(function(){var cs=[],was=[];['AudioContext','webkitAudioContext'].forEach(function(k){var O=window[k];if(!O)return;var P=function(a){var c=a===undefined?new O():new O(a);cs.push(c);return c};P.prototype=O.prototype;window[k]=P});" +
+    "document.addEventListener('visibilitychange',function(){if(document.hidden){was=cs.filter(function(c){return c.state==='running'});was.forEach(function(c){c.suspend().catch(function(){})});" +
+    "document.querySelectorAll('audio,video').forEach(function(m){if(!m.paused){m.__omniPaused=1;m.pause()}})}else{was.forEach(function(c){c.resume().catch(function(){})});was=[];" +
+    "document.querySelectorAll('audio,video').forEach(function(m){if(m.__omniPaused){m.__omniPaused=0;var r=m.play();if(r&&r.catch)r.catch(function(){})}})}})})();<\/script>";
+  function withPause(html) {
+    for (const re of [/<head[^>]*>/i, /<html[^>]*>/i, /<!doctype[^>]*>/i]) if (re.test(html)) return html.replace(re, (m) => m + PAUSE);
+    return PAUSE + html;
+  }
   function showPlayer(html, title, name) {
     game = { html, name, title };
     $("pTitle").textContent = game.title;
     $("pLink").textContent = ARTIFACT_URL + "#" + name;
     $("pNote").textContent = "";
-    pFrame.srcdoc = html;
+    pFrame.srcdoc = withPause(html);
     player.hidden = false;
     closeDrawer();
     if (location.hash !== "#" + name) { try { location.hash = name; } catch (e) {} }
@@ -909,7 +988,7 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
     else if (game) closeGame();
   }
   $("pClose").onclick = closeGame;
-  $("pRestart").onclick = () => { if (!game) return; const h = game.html; pFrame.srcdoc = ""; setTimeout(() => { pFrame.srcdoc = h; pFrame.focus(); }, 40); };
+  $("pRestart").onclick = () => { if (!game) return; const h = game.html; pFrame.srcdoc = ""; setTimeout(() => { pFrame.srcdoc = withPause(h); pFrame.focus(); }, 40); };
   $("pSave").onclick = () => game && offerFile(slug(game.title) + ".html", game.html, "text/html");
   $("pCopy").onclick = () => { if (!game) return; const b = $("pCopy"); copyText(ARTIFACT_URL + "#" + game.name, $("pLink")).then((ok) => { if (ok) { b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy link"), 1500); } }); };
   if (!document.fullscreenEnabled) $("pFull").hidden = true;
@@ -1326,6 +1405,17 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   vSelect.onchange = () => { prefs.voice = vSelect.value; savePrefs(); stopListening(); cancelSpeech(); speak("Hi, this is how I sound."); };
   vRate.onchange = () => { prefs.rate = vRate.value; savePrefs(); };
   if (prefs.rate) vRate.value = prefs.rate;
+  // Pause voice while the tab is hidden; pick up where it left off on return.
+  let hiddenPaused = false;
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (listening) { stopListening(); if (voiceOn) setVoiceStatus("Paused. Tap the mic to talk."); }
+      try { if (synth && synth.speaking && !synth.paused) { synth.pause(); hiddenPaused = true; } } catch (e) {}
+    } else if (hiddenPaused) {
+      hiddenPaused = false;
+      try { synth.resume(); } catch (e) {}
+    }
+  });
   if (synth) { loadVoices(); try { synth.addEventListener("voiceschanged", loadVoices); } catch (e) { synth.onvoiceschanged = loadVoices; } }
 
   // ---------- ask ----------
@@ -1440,6 +1530,7 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   }
 
   // ---------- boot ----------
+  if (!hasClaude) $("gate").hidden = false;
   renderStarters();
   showMode(MODES[prefs.mode] ? prefs.mode : "answer");
   setTier(["quick", "default", "complex"].includes(prefs.tier) ? prefs.tier : "default");
@@ -1482,4 +1573,5 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
 })();
 </script>
 
-</body></html>
+</body>
+</html>
