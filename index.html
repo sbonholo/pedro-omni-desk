@@ -937,12 +937,21 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
     if (!html) { showNotice("That game isn't in your chats. A game link opens only for the account that made it; use Save .html to share it."); return; }
     showPlayer(html, gameTitle(html, c.title), "game-" + chatId + "-" + idx);
   }
+  // Injected into played games: suspend their sound while the tab is hidden, resume on return (animation frames pause on their own).
+  const PAUSE = "<script>(function(){var cs=[],was=[];['AudioContext','webkitAudioContext'].forEach(function(k){var O=window[k];if(!O)return;var P=function(a){var c=a===undefined?new O():new O(a);cs.push(c);return c};P.prototype=O.prototype;window[k]=P});" +
+    "document.addEventListener('visibilitychange',function(){if(document.hidden){was=cs.filter(function(c){return c.state==='running'});was.forEach(function(c){c.suspend().catch(function(){})});" +
+    "document.querySelectorAll('audio,video').forEach(function(m){if(!m.paused){m.__omniPaused=1;m.pause()}})}else{was.forEach(function(c){c.resume().catch(function(){})});was=[];" +
+    "document.querySelectorAll('audio,video').forEach(function(m){if(m.__omniPaused){m.__omniPaused=0;var r=m.play();if(r&&r.catch)r.catch(function(){})}})}})})();<\/script>";
+  function withPause(html) {
+    for (const re of [/<head[^>]*>/i, /<html[^>]*>/i, /<!doctype[^>]*>/i]) if (re.test(html)) return html.replace(re, (m) => m + PAUSE);
+    return PAUSE + html;
+  }
   function showPlayer(html, title, name) {
     game = { html, name, title };
     $("pTitle").textContent = game.title;
     $("pLink").textContent = ARTIFACT_URL + "#" + name;
     $("pNote").textContent = "";
-    pFrame.srcdoc = html;
+    pFrame.srcdoc = withPause(html);
     player.hidden = false;
     closeDrawer();
     if (location.hash !== "#" + name) { try { location.hash = name; } catch (e) {} }
@@ -963,7 +972,7 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
     else if (game) closeGame();
   }
   $("pClose").onclick = closeGame;
-  $("pRestart").onclick = () => { if (!game) return; const h = game.html; pFrame.srcdoc = ""; setTimeout(() => { pFrame.srcdoc = h; pFrame.focus(); }, 40); };
+  $("pRestart").onclick = () => { if (!game) return; const h = game.html; pFrame.srcdoc = ""; setTimeout(() => { pFrame.srcdoc = withPause(h); pFrame.focus(); }, 40); };
   $("pSave").onclick = () => game && offerFile(slug(game.title) + ".html", game.html, "text/html");
   $("pCopy").onclick = () => { if (!game) return; const b = $("pCopy"); copyText(ARTIFACT_URL + "#" + game.name, $("pLink")).then((ok) => { if (ok) { b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy link"), 1500); } }); };
   if (!document.fullscreenEnabled) $("pFull").hidden = true;
@@ -1380,6 +1389,17 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   vSelect.onchange = () => { prefs.voice = vSelect.value; savePrefs(); stopListening(); cancelSpeech(); speak("Hi, this is how I sound."); };
   vRate.onchange = () => { prefs.rate = vRate.value; savePrefs(); };
   if (prefs.rate) vRate.value = prefs.rate;
+  // Pause voice while the tab is hidden; pick up where it left off on return.
+  let hiddenPaused = false;
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (listening) { stopListening(); if (voiceOn) setVoiceStatus("Paused. Tap the mic to talk."); }
+      try { if (synth && synth.speaking && !synth.paused) { synth.pause(); hiddenPaused = true; } } catch (e) {}
+    } else if (hiddenPaused) {
+      hiddenPaused = false;
+      try { synth.resume(); } catch (e) {}
+    }
+  });
   if (synth) { loadVoices(); try { synth.addEventListener("voiceschanged", loadVoices); } catch (e) { synth.onvoiceschanged = loadVoices; } }
 
   // ---------- ask ----------
