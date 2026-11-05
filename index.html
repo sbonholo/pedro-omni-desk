@@ -8,6 +8,25 @@
 <link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<script>
+/* Friendly crash toast: any uncaught error or rejected promise shows a small "tap to reload" message. */
+(function () {
+  var shown = false;
+  function toast() {
+    if (shown) return; shown = true;
+    var show = function () {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "crash-toast"; b.setAttribute("role", "alert");
+      b.textContent = "Something went wrong - tap to reload";
+      b.onclick = function () { location.reload(); };
+      document.body.appendChild(b);
+    };
+    if (document.body) show(); else document.addEventListener("DOMContentLoaded", show);
+  }
+  window.onerror = function (msg) { if (!/ResizeObserver loop/i.test(String(msg))) toast(); };
+  window.addEventListener("unhandledrejection", function () { toast(); });
+})();
+</script>
 <style>
 /* Self-hosted fonts (latin subset, from @fontsource). Other scripts fall back to system fonts. */
 @font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/bricolage-grotesque-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -232,6 +251,16 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
 .p-note { font-size: 12px; color: var(--muted); }
 .player iframe { flex: 1; width: 100%; border: 0; display: block; background: var(--surface); }
 
+/* Crash toast and "open in Claude" screen */
+.crash-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; max-width: calc(100% - 32px);
+  border: 0; border-radius: 999px; padding: 12px 20px; min-height: 44px; background: var(--ink); color: var(--bg); font: 600 14px/1.3 var(--font-body); box-shadow: 0 4px 16px rgba(0,0,0,.25); }
+.gate { position: fixed; inset: 0; z-index: 55; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+.gate-in { max-width: 420px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.gate h1 { margin: 0; font: 700 clamp(24px, 6vw, 32px)/1.15 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.gate .mark { width: 40px; height: 40px; }
+.gate p { margin: 0; color: var(--muted); }
+.gate a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; }
+
 @media (max-width: 640px) {
   .starters { grid-template-columns: minmax(0, 1fr); }
   .modes { order: 3; width: 100%; }
@@ -334,6 +363,15 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   </div>
   <div class="p-link"><span id="pLink"></span><button type="button" class="mini" id="pCopy">Copy link</button><span class="p-note" id="pNote"></span></div>
   <iframe id="pFrame" title="Game" sandbox="allow-scripts allow-pointer-lock"></iframe>
+</div>
+
+<div class="gate" id="gate" hidden>
+  <div class="gate-in">
+    <span class="mark" aria-hidden="true"></span>
+    <h1>Omni Desk runs inside Claude</h1>
+    <p>Open it from Pedro's Claude link to ask questions, save chats and play games.</p>
+    <a href="https://claude.ai/artifact/VBSoc9wNXNaXUaaxB2WEgL" target="_top" rel="noopener">Open Omni Desk in Claude</a>
+  </div>
 </div>
 
 <script src="vendor/marked.min.js"></script>
@@ -1456,6 +1494,7 @@ details.code-fold > summary { cursor: pointer; font-size: 13px; color: var(--mut
   }
 
   // ---------- boot ----------
+  if (!hasClaude) $("gate").hidden = false;
   renderStarters();
   showMode(MODES[prefs.mode] ? prefs.mode : "answer");
   setTier(["quick", "default", "complex"].includes(prefs.tier) ? prefs.tier : "default");
